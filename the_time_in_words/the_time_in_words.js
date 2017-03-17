@@ -18,20 +18,10 @@ function main() {
             if (hour_unity === arrayNumbers[i]) {
                 time_in_word = arrayMinutesString[i];
 
-                if (sub !== 15) {
-                    if (minute_unity == 1) {
-                        sufix = ' minute';
-                    } else {
-                        sufix = ' minutes';
-                    }
-                }
-                if (minute_unity > 30) {
-                    sufix += ' to ' + arrayMinutesString[parseInt(i + 1)];
-                } else if (minute_unity < 30) {
-                    sufix += ' past ' + arrayMinutesString[i];
-                } else if (minute_unity === 30) {
-                    sufix = ' past ' + arrayMinutesString[i];
-                }
+                sufix = getPlural(sub, minute_unity);
+
+                sufix = getMinuteDescription(minute_unity, arrayMinutesString, i);
+
             }
         }
 
@@ -50,6 +40,27 @@ function main() {
 
     }
     console.log(time_in_word);
+}
+
+function getMinuteDescription(minute_unity, arrayMinutesString, index) {
+    if (minute_unity > 30) {
+        sufix += ' to ' + arrayMinutesString[parseInt(index + 1)];
+    } else if (minute_unity < 30) {
+        sufix += ' past ' + arrayMinutesString[index];
+    } else if (minute_unity === 30) {
+        sufix = ' past ' + arrayMinutesString[index];
+    }
+}
+
+function getPlural(sub, minute_unity) {
+    if (sub !== 15) {
+        if (minute_unity == 1) {
+            return ' minute';
+        } else {
+            return ' minutes';
+        }
+    }
+    return '';
 }
 
 function validateConstraints(hour_unity, minute_unity) {
